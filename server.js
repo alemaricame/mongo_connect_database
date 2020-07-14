@@ -17,9 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Inicio..." });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Inicio..." });
+// });
 
 
 const db = require("./models");

@@ -1,9 +1,9 @@
 module.exports = mongoose => {
   var schema = mongoose.Schema(
     {
-      email: String,
-      password: String,
-      username: { type: String, required: true, unique: true },
+      email: { type: String, required: true, unique: true },
+      password: { type: String, required: true },
+      role: { type: String, enum: ['buyer', 'seller'], default: 'buyer' },
     },
     { timestamps: true }
   );
@@ -14,6 +14,6 @@ module.exports = mongoose => {
     return object;
   });
 
-  const collection = mongoose.model("users", schema);
-  return collection;
+  const createUser = mongoose.model("users", schema);
+  return createUser;
 };

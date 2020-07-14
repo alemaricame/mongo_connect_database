@@ -3,7 +3,6 @@ const Db = db.connect;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-  console.log("create",req.body);
    // Validate request
    if (!req.body.email) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -12,7 +11,6 @@ exports.create = (req, res) => {
 
   // Create a Tutorial
   const loginData = new Db({
-    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   });
@@ -21,12 +19,15 @@ exports.create = (req, res) => {
   loginData
     .save('users')
     .then(data => {
-      res.send(data);
+      res.status(200).send({
+        message:
+        "El usuario se agrego correctamente"
+      });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+        "Error al crear un usuario."+err.message || "Error al crear un usuario."
       });
     });
 };
@@ -59,4 +60,25 @@ exports.deleteAll = (req, res) => {
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
   
+};
+
+//Login
+
+exports.login = (req, res) => {
+
+    const id = req.body.email;
+
+    Db.findById(id)
+      .then(data => {
+        if (!data)
+          res.status(404).send({ message: "Not found Tutorial with id " + id });
+        else res.send(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .send({ message: "Error retrieving Tutorial with id=" + id });
+      });
+
+    
 };
